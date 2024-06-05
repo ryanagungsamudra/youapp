@@ -1,12 +1,14 @@
 ## Key Feature
   1. PWA (Progressive Web App)
-  2. Fully frontend logic (due to CORS issues in the backend API)
-  3. Next JS 14 with Tailwind CSS
-  4. Pixel perfect from figma design
-  5. Fully functionally
-  6. Loading animation
-  7. Horoscope and zodiac logic in frontend side
-  8. When refresh the data is still
+  2. Using Firebase for image server
+  3. Fully frontend logic (due to CORS issues in the backend API)
+  4. Next JS 14 with Tailwind CSS
+  5. Pixel perfect from figma design
+  6. Fully functionally
+  7. Loading animation
+  8. Horoscope and zodiac logic in frontend side
+  9. When refresh the data is still
+  10. Private route & public route
 
 In summary, the project involved addressing CORS issues in the backend API, which prompted me to create a mockup on the frontend side to ensure seamless functionality. Despite the CORS challenges on the backend, I successfully implemented the required feature, ensuring its full functionality on the frontend.
 ![image](https://github.com/ryanagungsamudra/youapp/assets/115606537/8de81459-a38b-4bcb-be0e-4bee4e316ec3)
