@@ -1,7 +1,25 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Key Feature
+  1. PWA (Progressive Web App)
+  2. Fully frontend logic (due to CORS issues in the backend API)
+  3. Next JS 14 with Tailwind CSS
+  4. Pixel perfect from figma design
+  5. Fully functionally
+  6. Loading animation
+  7. Horoscope and zodiac logic in frontend side
+  8. When refresh the data is still
+
+In summary, the project involved addressing CORS issues in the backend API, which prompted me to create a mockup on the frontend side to ensure seamless functionality. Despite the CORS challenges on the backend, I successfully implemented the required feature, ensuring its full functionality on the frontend.
+![image](https://github.com/ryanagungsamudra/youapp/assets/115606537/8de81459-a38b-4bcb-be0e-4bee4e316ec3)
+
+Additionally, I created a Progressive Web App (PWA) using Next.js, allowing for an enhanced user experience with offline capabilities and faster loading times. For state management, I leveraged React Context, which provided a robust and efficient way to manage application state across components.
+
+Furthermore, I integrated Firebase for image serving, harnessing its powerful features for efficient image management and delivery, thereby enhancing the overall performance of the application.
+
+Please find the git link to my submission: https://github.com/ryanagungsamudra/youapp
+
+Please find the video demo here: https://www.youtube.com/watch?v=8ycABDlJgG8
 
 ## Getting Started
-
 First, run the development server:
 
 ```bash
