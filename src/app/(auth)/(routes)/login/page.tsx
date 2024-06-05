@@ -9,6 +9,7 @@ import Link from "next/link";
 import MyContext from "@/context/MyContext";
 import { redirect, useRouter } from "next/navigation";
 import BackNavbar from "@/components/BackNavbar";
+import { LoadingScreen } from "@/components/LoadingScreen";
 
 interface User {
   email: string;
@@ -19,7 +20,7 @@ interface User {
 
 function LoginPage() {
   const { users, setUsers }: { users: User } = useContext(MyContext);
-  const router = useRouter();
+  const [loading, setLoading] = useState(false);
 
   const [visible, setVisible] = useState(false);
   const [emailOrUsername, setEmailOrUsername] = useState("");
@@ -37,20 +38,29 @@ function LoginPage() {
     }
   }, [emailOrUsername]);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e) => {
+    setLoading(true);
     e.preventDefault();
 
-    if (
-      (form.email === users.email || form.username === users.username) &&
-      form.password === users.password
-    ) {
-      setUsers((prev) => ({
-        ...prev,
-        isLogin: true,
-      }));
-    } else {
-      console.log("failed");
-    }
+    setTimeout(() => {
+      try {
+        if (
+          (form.email === users.email || form.username === users.username) &&
+          form.password === users.password
+        ) {
+          setUsers((prev) => ({
+            ...prev,
+            isLogin: true,
+          }));
+        } else {
+          console.log("Login failed");
+        }
+      } catch (error) {
+        console.error("An error occurred during login", error);
+      } finally {
+        setLoading(false);
+      }
+    }, 1500);
   };
 
   if (users.isLogin) {
@@ -60,6 +70,7 @@ function LoginPage() {
   return (
     <div>
       <BackNavbar displayName={false} displayButton={false} />
+      <LoadingScreen status={loading} />
 
       {/* Form start */}
       <div className="w-full h-[80vh] flex items-center">

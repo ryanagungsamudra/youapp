@@ -9,6 +9,7 @@ import Link from "next/link";
 import MyContext from "@/context/MyContext";
 import { redirect, useRouter } from "next/navigation";
 import BackNavbar from "@/components/BackNavbar";
+import { LoadingScreen } from "@/components/LoadingScreen";
 
 interface User {
   email: string;
@@ -18,7 +19,10 @@ interface User {
 }
 
 function RegisterPage() {
-  const { users, setUsers }: { users: User } = useContext(MyContext);
+  const { users, setUsers, setInterest, setAbout }: { users: User } =
+    useContext(MyContext);
+  const [loading, setLoading] = useState(false);
+
   const router = useRouter();
 
   const [visible, setVisible] = useState({
@@ -47,18 +51,39 @@ function RegisterPage() {
   }, [password.password, password.confirmPassword]);
 
   const handleSubmit = (e) => {
+    setLoading(true);
     e.preventDefault();
-    if (form.email && form.username && form.password) {
-      setUsers((prev) => ({
-        ...prev,
-        email: form.email,
-        username: form.username,
-        password: form.password,
-        isLogin: false,
-      }));
+    setTimeout(() => {
+      try {
+        if (form.email && form.username && form.password) {
+          setUsers((prev) => ({
+            ...prev,
+            email: form.email,
+            username: form.username,
+            password: form.password,
+            isLogin: false,
+          }));
 
-      router.push("/login");
-    }
+          setInterest((prev) => ({
+            ...prev,
+            data: [],
+          }));
+
+          setAbout((prev) => ({
+            ...prev,
+            picture: "",
+            data: [],
+          }));
+
+          router.push("/login");
+        }
+      } catch (error) {
+        console.error("Error in handleSubmit:", error);
+        // Handle error if needed
+      } finally {
+        setLoading(false);
+      }
+    }, 1500);
   };
 
   if (users.isLogin) {
@@ -68,6 +93,7 @@ function RegisterPage() {
   return (
     <div>
       <BackNavbar displayName={false} displayButton={false} />
+      <LoadingScreen status={loading} />
 
       {/* Form start */}
       <div className="w-full h-[80vh] flex items-center">

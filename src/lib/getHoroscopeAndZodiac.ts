@@ -30,3 +30,44 @@ export const getHoroscopeAndZodiac = (birthday) => {
   }
   return { horoscope: "", zodiac: "" };
 };
+
+export const formatBirthday = (birthday) => {
+  if (birthday) {
+    const date = new Date(birthday);
+    const day = date.getDate().toString().padStart(2, "0");
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+    const year = date.getFullYear();
+
+    // Calculate age
+    const today = new Date();
+    let age = today.getFullYear() - year;
+    const monthDiff = today.getMonth() - date.getMonth();
+    const dayDiff = today.getDate() - date.getDate();
+
+    // Adjust age if the birthday has not yet occurred this year
+    if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
+      age--;
+    }
+
+    return `${day} / ${month} / ${year} (Age ${age})`;
+  } else {
+    return null;
+  }
+};
+
+export const calculateAge = (birthday) => {
+  const date = new Date(birthday);
+  const year = date.getFullYear();
+
+  // Calculate age
+  const today = new Date();
+  let age = today.getFullYear() - year;
+  const monthDiff = today.getMonth() - date.getMonth();
+  const dayDiff = today.getDate() - date.getDate();
+
+  // Adjust age if the birthday has not yet occurred this year
+  if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
+    age--;
+  }
+  return age;
+};

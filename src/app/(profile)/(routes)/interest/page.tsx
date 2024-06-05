@@ -27,7 +27,7 @@ function Page() {
     <div className="w-full">
       <BackNavbar displayName={false} displayButton={true} data={chips} />
 
-      <div className="w-full flex flex-wrap mt-[6rem] px-[0.8rem] gap-3">
+      <div className="w-full flex flex-wrap mt-[4rem] px-[0.8rem] gap-3">
         <h2 className="w-full gradient-text text-sm font-bold px-[1rem]">
           Tell everyone about yourself
         </h2>
