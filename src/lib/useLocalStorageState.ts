@@ -1,14 +1,27 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, Dispatch, SetStateAction } from "react";
 
-const useLocalStorageState = (key, initialValue) => {
-  const [state, setState] = useState(() => {
-    const storedValue = localStorage.getItem(key);
-    return storedValue ? JSON.parse(storedValue) : initialValue;
-  });
+const useLocalStorageState = <T>(
+  key: string,
+  initialValue: T
+): [T, Dispatch<SetStateAction<T>>] => {
+  const [state, setState] = useState<T>(() => initialValue);
+  const [isHydrated, setIsHydrated] = useState(false);
 
   useEffect(() => {
-    localStorage.setItem(key, JSON.stringify(state));
-  }, [key, state]);
+    if (typeof window !== "undefined") {
+      const storedValue = localStorage.getItem(key);
+      if (storedValue) {
+        setState(JSON.parse(storedValue));
+      }
+      setIsHydrated(true);
+    }
+  }, [key]);
+
+  useEffect(() => {
+    if (isHydrated) {
+      localStorage.setItem(key, JSON.stringify(state));
+    }
+  }, [key, state, isHydrated]);
 
   return [state, setState];
 };

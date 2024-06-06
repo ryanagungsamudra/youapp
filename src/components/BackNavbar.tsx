@@ -2,7 +2,7 @@
 
 import MyContext from "@/context/MyContext";
 import { useRouter } from "next/navigation";
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { MdOutlineArrowBackIosNew } from "react-icons/md";
 import { MdLogout } from "react-icons/md";
 import { BsThreeDots } from "react-icons/bs";
@@ -13,13 +13,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-
-interface User {
-  email: string;
-  username: string;
-  password: string;
-  isLogin: boolean;
-}
+import { MyContextType } from "@/context/types";
 
 function BackNavbar({
   displayName,
@@ -28,14 +22,15 @@ function BackNavbar({
 }: {
   displayName: boolean;
   displayButton: boolean;
-  data: any;
+  data?: any;
 }) {
   const router = useRouter();
-  const { users, setUsers, setInterest }: { users: User } =
-    useContext(MyContext);
+  const { users, setUsers, setInterest } = useContext(
+    MyContext
+  ) as MyContextType;
 
   const handleSave = () => {
-    setInterest((prev) => ({
+    setInterest((prev: any) => ({
       ...prev,
       data: data,
     }));
@@ -43,7 +38,7 @@ function BackNavbar({
   };
 
   const handleLogout = () => {
-    setUsers((prev) => ({
+    setUsers((prev: any) => ({
       ...prev,
       isLogin: false,
     }));

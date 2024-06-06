@@ -1,23 +1,30 @@
 "use client";
 
-import React from "react";
+import React, { ReactNode } from "react";
 import useLocalStorageState from "@/lib/useLocalStorageState";
 import MyContext from "./MyContext";
+import { User, Interest, About } from "@/context/types";
 
-const Context = ({ children }) => {
-  // DATA
-  const [users, setUsers] = useLocalStorageState("usersData", {
+interface ContextProps {
+  children: ReactNode;
+}
+
+const Context = ({ children }: ContextProps) => {
+  const [users, setUsers] = useLocalStorageState<User>("usersData", {
     email: "",
     username: "",
     password: "",
     isLogin: false,
   });
 
-  const [interest, setInterest] = useLocalStorageState("userInterest", {
-    data: [],
-  });
+  const [interest, setInterest] = useLocalStorageState<Interest>(
+    "userInterest",
+    {
+      data: [],
+    }
+  );
 
-  const [about, setAbout] = useLocalStorageState("userAbout", {
+  const [about, setAbout] = useLocalStorageState<About>("userAbout", {
     picture: "",
     data: [],
   });

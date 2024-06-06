@@ -1,4 +1,5 @@
 import MyContext from "@/context/MyContext";
+import { MyContextType } from "@/context/types";
 import { calculateAge } from "@/lib/getHoroscopeAndZodiac";
 import Image from "next/image";
 import React, { useContext } from "react";
@@ -41,15 +42,8 @@ const HoroscopeIcon = ({ sign }) => {
   return <IconComponent className="text-white" />;
 };
 
-interface User {
-  email: string;
-  username: string;
-  password: string;
-  isLogin: boolean;
-}
-
 function Hero() {
-  const { users, about }: { users: User } = useContext(MyContext);
+  const { users, about } = useContext(MyContext) as MyContextType;
 
   const gender = about?.data?.gender;
   const horoscope = about?.data?.horoscope;
@@ -57,14 +51,16 @@ function Hero() {
 
   return (
     <div className="w-full h-[200px] bg-[#162329] rounded-2xl relative">
-      <Image
-        src={about.picture}
-        alt="."
-        layout="fill"
-        objectFit="cover"
-        objectPosition="center"
-        className="rounded-2xl"
-      />
+      {about?.picture && (
+        <Image
+          src={about.picture}
+          alt="."
+          layout="fill"
+          objectFit="cover"
+          objectPosition="center"
+          className="rounded-2xl"
+        />
+      )}
       <div className={`absolute left-4 bottom-3`}>
         <h1 className="text-white font-bold text-base ">
           @

@@ -7,7 +7,13 @@ import loadingAnimation from "@/assets/loading.json";
 // Lottie Components
 import Lottie from "lottie-react";
 
-export const LoadingScreen = ({ status, style }) => {
+export const LoadingScreen = ({
+  status,
+  style,
+}: {
+  status: boolean;
+  style?: any;
+}) => {
   return (
     <>
       {status && (
