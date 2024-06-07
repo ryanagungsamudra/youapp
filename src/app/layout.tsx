@@ -23,11 +23,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Context>
-          {/* <div className="min-h-screen w-full flex container-primary"> */}
-          {children}
-          {/* </div> */}
-        </Context>
+        <Context>{children}</Context>
       </body>
     </html>
   );

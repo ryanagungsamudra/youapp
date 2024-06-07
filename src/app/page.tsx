@@ -1,26 +1,16 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import React, { useContext, useEffect, useState } from "react";
-import { CiEdit } from "react-icons/ci";
-import Link from "next/link";
 import MyContext from "@/context/MyContext";
 import { redirect, useRouter } from "next/navigation";
 import BackNavbar from "@/components/BackNavbar";
 import About from "@/components/About";
 import Interest from "@/components/Interest";
 import Hero from "@/components/Hero";
-
-interface User {
-  email: string;
-  username: string;
-  password: string;
-  isLogin: boolean;
-}
+import { MyContextType } from "@/context/types";
 
 function Page() {
-  const { users }: { users: User } = useContext(MyContext);
+  const { users } = useContext(MyContext) as MyContextType;
 
   if (!users.isLogin) {
     redirect("/login");

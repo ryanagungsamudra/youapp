@@ -1,6 +1,7 @@
 "use client";
 
 import MyContext from "@/context/MyContext";
+import { MyContextType } from "@/context/types";
 import { useRouter } from "next/navigation";
 import React, { useContext } from "react";
 import { CiEdit } from "react-icons/ci";
@@ -8,7 +9,7 @@ import { CiEdit } from "react-icons/ci";
 function Interest() {
   const router = useRouter();
 
-  const { interest }: { interest: any } = useContext(MyContext);
+  const { interest } = useContext(MyContext) as MyContextType;
 
   return (
     <div className="w-full h-full rounded-[14px] bg-[#0E191F] p-4 py-6 px-6">

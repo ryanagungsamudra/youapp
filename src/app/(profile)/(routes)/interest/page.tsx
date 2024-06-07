@@ -2,15 +2,16 @@
 
 import BackNavbar from "@/components/BackNavbar";
 import MyContext from "@/context/MyContext";
+import { MyContextType } from "@/context/types";
 import React, { useContext, useState } from "react";
 
 function Page() {
-  const { interest }: { interest: any } = useContext(MyContext);
+  const { interest } = useContext(MyContext) as MyContextType;
 
   const [chips, setChips] = useState(interest?.data);
   const [inputValue, setInputValue] = useState("");
 
-  const handleKeyDown = (e) => {
+  const handleKeyDown = (e: any) => {
     if (e.key === "Enter" && inputValue.trim() !== "") {
       setChips([...chips, inputValue.trim()]);
       setInputValue("");
@@ -19,7 +20,7 @@ function Page() {
     }
   };
 
-  const handleDeleteChip = (chipToDelete) => {
+  const handleDeleteChip = (chipToDelete: any) => {
     setChips(chips.filter((chip) => chip !== chipToDelete));
   };
 

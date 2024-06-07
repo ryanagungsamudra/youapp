@@ -26,7 +26,13 @@ const Context = ({ children }: ContextProps) => {
 
   const [about, setAbout] = useLocalStorageState<About>("userAbout", {
     picture: "",
-    data: [],
+    data: {
+      birthday: "",
+      horoscope: "",
+      zodiac: "",
+      height: 0,
+      weight: 0,
+    },
   });
 
   return (

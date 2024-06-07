@@ -10,16 +10,10 @@ import MyContext from "@/context/MyContext";
 import { redirect, useRouter } from "next/navigation";
 import BackNavbar from "@/components/BackNavbar";
 import { LoadingScreen } from "@/components/LoadingScreen";
-
-interface User {
-  email: string;
-  username: string;
-  password: string;
-  isLogin: boolean;
-}
+import { MyContextType } from "@/context/types";
 
 function LoginPage() {
-  const { users, setUsers }: { users: User } = useContext(MyContext);
+  const { users, setUsers } = useContext(MyContext) as MyContextType;
   const [loading, setLoading] = useState(false);
 
   const [visible, setVisible] = useState(false);
@@ -31,14 +25,14 @@ function LoginPage() {
   });
 
   useEffect(() => {
-    if (emailOrUsername.includes("@")) {
-      setForm({ ...form, email: emailOrUsername, username: "" });
-    } else {
-      setForm({ ...form, email: "", username: emailOrUsername });
-    }
+    setForm((prevForm) => ({
+      ...prevForm,
+      email: emailOrUsername.includes("@") ? emailOrUsername : "",
+      username: emailOrUsername.includes("@") ? "" : emailOrUsername,
+    }));
   }, [emailOrUsername]);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: any) => {
     setLoading(true);
     e.preventDefault();
 

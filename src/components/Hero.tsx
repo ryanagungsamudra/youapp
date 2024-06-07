@@ -19,7 +19,7 @@ import {
   GiPisces,
 } from "react-icons/gi";
 
-const horoscopeIcons = {
+const horoscopeIcons: { [key: string]: React.ElementType } = {
   Aries: GiAries,
   Taurus: GiTaurus,
   Gemini: GiGemini,
@@ -34,10 +34,16 @@ const horoscopeIcons = {
   Pisces: GiPisces,
 };
 
-const HoroscopeIcon = ({ sign }) => {
+interface HoroscopeIconProps {
+  sign: any;
+}
+
+const HoroscopeIcon: React.FC<HoroscopeIconProps> = ({ sign }) => {
   const IconComponent = horoscopeIcons[sign];
 
-  if (!IconComponent) return null; // Return null if no matching icon is found
+  if (!IconComponent) {
+    return null;
+  }
 
   return <IconComponent className="text-white" />;
 };

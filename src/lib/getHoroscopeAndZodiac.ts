@@ -13,7 +13,7 @@ const zodiacSigns = [
   { sign: "Pisces", symbol: "Fish", start: "02-19", end: "03-20" },
 ];
 
-export const getHoroscopeAndZodiac = (birthday) => {
+export const getHoroscopeAndZodiac = (birthday: any) => {
   const date = new Date(birthday);
   const month = (date.getMonth() + 1).toString().padStart(2, "0");
   const day = date.getDate().toString().padStart(2, "0");
@@ -31,7 +31,7 @@ export const getHoroscopeAndZodiac = (birthday) => {
   return { horoscope: "", zodiac: "" };
 };
 
-export const formatBirthday = (birthday) => {
+export const formatBirthday = (birthday: any) => {
   if (birthday) {
     const date = new Date(birthday);
     const day = date.getDate().toString().padStart(2, "0");
@@ -55,7 +55,7 @@ export const formatBirthday = (birthday) => {
   }
 };
 
-export const calculateAge = (birthday) => {
+export const calculateAge = (birthday: any) => {
   const date = new Date(birthday);
   const year = date.getFullYear();
 

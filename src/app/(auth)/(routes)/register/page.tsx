@@ -10,17 +10,12 @@ import MyContext from "@/context/MyContext";
 import { redirect, useRouter } from "next/navigation";
 import BackNavbar from "@/components/BackNavbar";
 import { LoadingScreen } from "@/components/LoadingScreen";
-
-interface User {
-  email: string;
-  username: string;
-  password: string;
-  isLogin: boolean;
-}
+import { MyContextType } from "@/context/types";
 
 function RegisterPage() {
-  const { users, setUsers, setInterest, setAbout }: { users: User } =
-    useContext(MyContext);
+  const { users, setUsers, setInterest, setAbout } = useContext(
+    MyContext
+  ) as MyContextType;
   const [loading, setLoading] = useState(false);
 
   const router = useRouter();
@@ -42,21 +37,24 @@ function RegisterPage() {
 
   useEffect(() => {
     if (password.password === password.confirmPassword) {
-      setForm({ ...form, password: password.password });
-      setPassword({ ...password, passwordError: "" });
+      setForm((prevForm) => ({ ...prevForm, password: password.password }));
+      setPassword((prevPassword) => ({ ...prevPassword, passwordError: "" }));
     } else {
-      setForm({ ...form, password: "" });
-      setPassword({ ...password, passwordError: "Password should be same!" });
+      setForm((prevForm) => ({ ...prevForm, password: "" }));
+      setPassword((prevPassword) => ({
+        ...prevPassword,
+        passwordError: "Password should be same!",
+      }));
     }
   }, [password.password, password.confirmPassword]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: any) => {
     setLoading(true);
     e.preventDefault();
     setTimeout(() => {
       try {
         if (form.email && form.username && form.password) {
-          setUsers((prev) => ({
+          setUsers((prev: any) => ({
             ...prev,
             email: form.email,
             username: form.username,
@@ -64,12 +62,12 @@ function RegisterPage() {
             isLogin: false,
           }));
 
-          setInterest((prev) => ({
+          setInterest((prev: any) => ({
             ...prev,
             data: [],
           }));
 
-          setAbout((prev) => ({
+          setAbout((prev: any) => ({
             ...prev,
             picture: "",
             data: [],
@@ -79,7 +77,6 @@ function RegisterPage() {
         }
       } catch (error) {
         console.error("Error in handleSubmit:", error);
-        // Handle error if needed
       } finally {
         setLoading(false);
       }

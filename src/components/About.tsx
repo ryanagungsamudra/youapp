@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { CiEdit } from "react-icons/ci";
 import { GoPlus } from "react-icons/go";
 import { Input } from "./ui/input";
@@ -8,9 +8,7 @@ import { Input } from "./ui/input";
 import {
   Select,
   SelectContent,
-  SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
@@ -22,16 +20,26 @@ import MyContext from "@/context/MyContext";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { storage } from "@/lib/firebase";
 import { LoadingScreen } from "./LoadingScreen";
+import { AboutDataItem, MyContextType } from "@/context/types";
+import Image from "next/image";
+
+interface FormData {
+  [key: string]: any;
+  imagePreview?: string | ArrayBuffer | null;
+  imageFile?: File | null;
+  birthday?: string;
+  horoscope?: string;
+  zodiac?: string;
+}
 
 function About() {
   const [loading, setLoading] = useState(false);
-
-  const { about, setAbout }: { about: any } = useContext(MyContext);
+  const { about, setAbout } = useContext(MyContext) as MyContextType;
   const [isEdit, setIsEdit] = useState(false);
 
-  const [formData, setFormData] = useState(about?.data);
+  const [formData, setFormData] = useState<FormData>(about?.data || {});
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
@@ -52,14 +60,14 @@ function About() {
     uploadFirebase();
   };
 
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
     if (file) {
       const reader = new FileReader();
-      reader.onload = (upload) => {
+      reader.onload = (upload: ProgressEvent<FileReader>) => {
         setFormData((prevFormData) => ({
           ...prevFormData,
-          imagePreview: upload.target.result, // Data URL for preview
+          imagePreview: upload.target?.result, // Data URL for preview
           imageFile: file, // Actual file for upload
         }));
       };
@@ -68,7 +76,10 @@ function About() {
   };
 
   const triggerFileInput = () => {
-    document.getElementById("fileInput").click();
+    const fileInput = document.getElementById("fileInput");
+    if (fileInput) {
+      fileInput.click();
+    }
   };
 
   // Handle upload image
@@ -85,12 +96,12 @@ function About() {
         const downloadURL = await getDownloadURL(imageRef);
         console.log("File uploaded successfully. Download URL:", downloadURL);
 
-        setAbout((prev) => ({
+        setAbout((prev: any) => ({
           ...prev,
           data: formData,
           picture: downloadURL,
         }));
-        setFormData((prev) => ({
+        setFormData((prev: any) => ({
           ...prev,
           imagePreview: "",
         }));
@@ -102,7 +113,7 @@ function About() {
         console.log(error);
       }
     } else {
-      setAbout((prev) => ({
+      setAbout((prev: any) => ({
         ...prev,
         picture: about.picture,
         data: formData,
@@ -115,6 +126,17 @@ function About() {
       setLoading(false);
       setIsEdit(false);
     }
+  };
+
+  // Check if about.data has any defined properties
+  const isAboutDataEmpty = (data: AboutDataItem): boolean => {
+    return (
+      !data.birthday &&
+      !data.horoscope &&
+      !data.zodiac &&
+      !data.height &&
+      !data.weight
+    );
   };
 
   return (
@@ -146,9 +168,11 @@ function About() {
           <div className="flex gap-4 items-center my-8">
             {formData.imagePreview ? (
               <div>
-                <img
-                  src={formData.imagePreview}
+                <Image
+                  src={formData.imagePreview as string}
                   alt="Selected"
+                  width={57}
+                  height={57}
                   className="w-[57px] h-[57px] rounded-[17px] cursor-pointer"
                   onClick={triggerFileInput}
                 />
@@ -316,7 +340,7 @@ function About() {
             </div>
           </div>
         </div>
-      ) : about?.data?.length === 0 ? (
+      ) : isAboutDataEmpty(about.data) ? (
         <p className="text-[#FFFFFF85] text-sm font-medium pt-8">
           Add in your your to help others know you better
         </p>

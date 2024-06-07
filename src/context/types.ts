@@ -10,9 +10,19 @@ export interface Interest {
   data: any[];
 }
 
+export interface AboutDataItem {
+  birthday?: string;
+  horoscope?: string;
+  zodiac?: string;
+  height?: number;
+  weight?: number;
+  displayName?: string;
+  gender?: string;
+}
+
 export interface About {
   picture: string;
-  data: any[];
+  data: AboutDataItem;
 }
 
 export interface MyContextType {
